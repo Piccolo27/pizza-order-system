@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use Carbon\Carbon;
+use App\Models\Cart;
 use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
@@ -19,7 +20,8 @@ class UserController extends Controller
     public function home(){
         $pizzas = Product::orderBy('created_at','desc')->get();
         $categories = Category::get();
-        return view('user.main.home',compact('pizzas','categories'));
+        $cart = Cart::where('user_id',Auth::user()->id)->get();
+        return view('user.main.home',compact('pizzas','categories','cart'));
     }
 
     //change password page
@@ -73,6 +75,35 @@ class UserController extends Controller
 
         User::where('id',$id)->update($data);
         return back()->with(['updateSuccess' => 'User Account Updated']);
+    }
+
+    //filter pizza
+    public function filter($categoryId){
+        $pizzas = Product::where('category_id',$categoryId)->orderBy('created_at','desc')->get();
+        $categories = Category::get();
+        return view('user.main.home',compact('pizzas','categories'));
+    }
+
+    //pizza details
+    public function pizzaDetails($pizzaId){
+        $pizzas = Product::where('id',$pizzaId)->first();
+        $pizzaLists = Product::get();
+        return view('user.main.details',compact('pizzas','pizzaLists'));
+    }
+
+    //cart list
+    public function cartList(){
+        $cartList = Cart::select('carts.*','products.name as pizza_name','products.price as pizza_price','products.image as pizza_image')
+                        ->leftJoin('products','products.id','carts.product_id')
+                        ->where('user_id',Auth::user()->id)
+                        ->get();
+
+        $totalPrice = 0;
+        foreach($cartList as $c){
+            $totalPrice += $c->pizza_price * $c->quantity;
+        }
+        //dd($totalPrice);
+        return view('user.main.cart',compact('cartList','totalPrice'));
     }
 
     //request user data

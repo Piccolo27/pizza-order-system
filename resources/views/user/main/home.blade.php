@@ -1,23 +1,3 @@
-{{-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>User Home Page</h1>
-
-    Role - {{ Auth::user()->role }}
-
-    <form action="{{ route('logout') }}" method="post">
-        @csrf
-        <input type="submit" value="Logout">
-    </form>
-</body>
-</html> --}}
-
 @extends('user.layouts.master')
 
 @section('content')
@@ -35,10 +15,16 @@
                             <label class="mt-2" for="price-all">Category</label>
                             <span class="badge border font-weight-normal text-black">{{ count($categories) }}</span>
                         </div>
+                        <div class="d-flex align-items-center justify-content-between mb-3">
+                            <a href="{{ route('user#home') }}" class=" text-dark">
+                                <label class="">All</label>
+                            </a>
+                        </div>
                         @foreach ($categories as $category)
                             <div class="d-flex align-items-center justify-content-between mb-3">
-                                <label class="" for="price-1">{{ $category->name }}</label>
-                                {{-- <span class="badge border font-weight-normal">150</span> --}}
+                                <a href="{{ route('user#filter', $category->id) }}" class=" text-dark">
+                                    <label class="" for="price-1">{{ $category->name }}</label>
+                                </a>
                             </div>
                         @endforeach
                     </form>
@@ -58,8 +44,15 @@
                     <div class="col-12 pb-1">
                         <div class="d-flex align-items-center justify-content-between mb-4">
                             <div>
-                                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
-                                <button class="btn btn-sm btn-light ml-2"><i class="fa fa-bars"></i></button>
+                                <a href="{{ route('user#cartList') }}">
+                                    <button type="button" class="btn btn-dark text-white position-relative">
+                                        <i class="fa-solid fa-cart-shopping me-1"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ count($cart) }}
+                                        </span>
+                                    </button>
+                                </a>
                             </div>
                             <div class="ml-2">
                                 <div class="btn-group">
@@ -82,27 +75,34 @@
                         </div>
                     </div>
                     <span class="row" id="dataList">
-                        @foreach ($pizzas as $pizza)
-                            <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-                                <div class="product-item bg-light mb-4" id="myForm">
-                                    <div class="product-img position-relative overflow-hidden" style=" height: 200px">
-                                        <img class="img-fluid w-100" src="{{ asset('storage/' . $pizza->image) }}" alt="">
-                                        <div class="product-action">
-                                            <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa fa-shopping-cart"></i></a>
-                                            <a class="btn btn-outline-dark btn-square" href=""><i
-                                                    class="fa-solid fa-circle-info"></i></a>
+                        @if (count($pizzas) != 0)
+                            @foreach ($pizzas as $pizza)
+                                <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                                    <div class="product-item bg-light mb-4" id="myForm">
+                                        <div class="product-img position-relative overflow-hidden" style=" height: 200px">
+                                            <img class="img-fluid w-100" src="{{ asset('storage/' . $pizza->image) }}"
+                                                alt="">
+                                            <div class="product-action">
+                                                <a class="btn btn-outline-dark btn-square" href=""><i
+                                                        class="fa fa-shopping-cart"></i></a>
+                                                <a class="btn btn-outline-dark btn-square"
+                                                    href="{{ route('user#pizzaDetails', $pizza->id) }}"><i
+                                                        class="fa-solid fa-circle-info"></i></a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="text-center py-4">
-                                        <a class="h6 text-decoration-none text-truncate" href="">{{ $pizza->name }}</a>
-                                        <div class="d-flex align-items-center justify-content-center mt-2">
-                                            <h5>{{ $pizza->price }}</h5>
+                                        <div class="text-center py-4">
+                                            <a class="h6 text-decoration-none text-truncate"
+                                                href="">{{ $pizza->name }}</a>
+                                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                                <h5>{{ $pizza->price }}</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        @else
+                            <p class=" text-center fs-4 col-6 offset-3 py-5 ">There is no pizza</p>
+                        @endif
                     </span>
                 </div>
             </div>
@@ -131,28 +131,28 @@
                         success: function(response) {
                             $list = '';
 
-                            for ($i = 0; $i < response.length; $i++){
+                            for ($i = 0; $i < response.length; $i++) {
                                 $list += `
-                                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-                                        <div class="product-item bg-light mb-4" id="myForm">
-                                            <div class="product-img position-relative overflow-hidden" style=" height: 200px">
-                                                <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
-                                                <div class="product-action">
-                                                    <a class="btn btn-outline-dark btn-square" href=""><i
-                                                            class="fa fa-shopping-cart"></i></a>
-                                                    <a class="btn btn-outline-dark btn-square" href=""><i
-                                                            class="fa-solid fa-circle-info"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="text-center py-4">
-                                                <a class="h6 text-decoration-none text-truncate" href="">${response[$i].name}</a>
-                                                <div class="d-flex align-items-center justify-content-center mt-2">
-                                                    <h5>${response[$i].price}</h5>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                            <div class="product-item bg-light mb-4" id="myForm">
+                                <div class="product-img position-relative overflow-hidden" style=" height: 200px">
+                                    <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
+                                    <div class="product-action">
+                                        <a class="btn btn-outline-dark btn-square" href=""><i
+                                                class="fa fa-shopping-cart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href=""><i
+                                                class="fa-solid fa-circle-info"></i></a>
                                     </div>
-                                `;
+                                </div>
+                                <div class="text-center py-4">
+                                    <a class="h6 text-decoration-none text-truncate" href="">${response[$i].name}</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        <h5>${response[$i].price}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                             }
                             $('#dataList').html($list);
                         }
@@ -168,28 +168,28 @@
                         success: function(response) {
                             $list = '';
 
-                            for ($i = 0; $i < response.length; $i++){
+                            for ($i = 0; $i < response.length; $i++) {
                                 $list += `
-                                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
-                                        <div class="product-item bg-light mb-4" id="myForm">
-                                            <div class="product-img position-relative overflow-hidden" style=" height: 200px">
-                                                <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
-                                                <div class="product-action">
-                                                    <a class="btn btn-outline-dark btn-square" href=""><i
-                                                            class="fa fa-shopping-cart"></i></a>
-                                                    <a class="btn btn-outline-dark btn-square" href=""><i
-                                                            class="fa-solid fa-circle-info"></i></a>
-                                                </div>
-                                            </div>
-                                            <div class="text-center py-4">
-                                                <a class="h6 text-decoration-none text-truncate" href="">${response[$i].name}</a>
-                                                <div class="d-flex align-items-center justify-content-center mt-2">
-                                                    <h5>${response[$i].price}</h5>
-                                                </div>
-                                            </div>
-                                        </div>
+                        <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                            <div class="product-item bg-light mb-4" id="myForm">
+                                <div class="product-img position-relative overflow-hidden" style=" height: 200px">
+                                    <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
+                                    <div class="product-action">
+                                        <a class="btn btn-outline-dark btn-square" href=""><i
+                                                class="fa fa-shopping-cart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href=""><i
+                                                class="fa-solid fa-circle-info"></i></a>
                                     </div>
-                                `;
+                                </div>
+                                <div class="text-center py-4">
+                                    <a class="h6 text-decoration-none text-truncate" href="">${response[$i].name}</a>
+                                    <div class="d-flex align-items-center justify-content-center mt-2">
+                                        <h5>${response[$i].price}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
                             }
                             $('#dataList').html($list);
                         }

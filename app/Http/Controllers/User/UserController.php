@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
@@ -81,7 +82,8 @@ class UserController extends Controller
     public function filter($categoryId){
         $pizzas = Product::where('category_id',$categoryId)->orderBy('created_at','desc')->get();
         $categories = Category::get();
-        return view('user.main.home',compact('pizzas','categories'));
+        $cart = Cart::where('user_id',Auth::user()->id)->get();
+        return view('user.main.home',compact('pizzas','categories','cart'));
     }
 
     //pizza details
@@ -104,6 +106,14 @@ class UserController extends Controller
         }
         //dd($totalPrice);
         return view('user.main.cart',compact('cartList','totalPrice'));
+    }
+
+    //hsitory page
+    public function history(){
+        $orders = Order::where('user_id',Auth::user()->id)
+                        ->orderBy('created_at')
+                        ->paginate(6);
+        return view('user.main.history',compact('orders'));
     }
 
     //request user data

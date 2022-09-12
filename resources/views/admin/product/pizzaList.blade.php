@@ -76,7 +76,7 @@
                                 <tbody>
                                     @foreach ($pizzas as $pizza)
                                         <tr class="tr-shadow">
-                                            <td class=" col-2"><img src="{{ asset('storage/'.$pizza->image) }}" class=" img-thumbnail shadow-sm"></td>
+                                            <td class=" col-2"><img src="{{ asset('storage/'.$pizza->image) }}" class=" img-thumbnail shadow-sm" style="height: 150px; width:200px"></td>
                                             <td>{{ $pizza->name }}</td>
                                             <td>{{ $pizza->price }}</td>
                                             <td>{{ $pizza->category_name }}</td>

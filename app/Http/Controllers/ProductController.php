@@ -102,7 +102,7 @@ class ProductController extends Controller
             'pizzaWaitingTime' => 'required',
         ];
 
-        $validationRules['pizzaImage'] = $action == 'create' ? 'required|mimes:jpg,jpeg,png|file' : 'mimes:jpg,jpeg,png|file';
+        $validationRules['pizzaImage'] = $action == 'create' ? 'required|mimes:jpg,jpeg,png,webp|file' : 'mimes:jpg,jpeg,png|file';
 
         Validator::make($request->all(),$validationRules)->validate();
     }

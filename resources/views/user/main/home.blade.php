@@ -53,6 +53,16 @@
                                         </span>
                                     </button>
                                 </a>
+
+                                <a href="{{ route('user#history') }}" class="ms-3">
+                                    <button type="button" class="btn btn-dark text-white position-relative">
+                                        <i class="fa-solid fa-clock-rotate-left"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            {{ count($cart) }}
+                                        </span>
+                                    </button>
+                                </a>
                             </div>
                             <div class="ml-2">
                                 <div class="btn-group">
@@ -79,7 +89,7 @@
                             @foreach ($pizzas as $pizza)
                                 <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                                     <div class="product-item bg-light mb-4" id="myForm">
-                                        <div class="product-img position-relative overflow-hidden" style=" height: 200px">
+                                        <div class="product-img position-relative overflow-hidden" style=" height: 20rem">
                                             <img class="img-fluid w-100" src="{{ asset('storage/' . $pizza->image) }}"
                                                 alt="">
                                             <div class="product-action">
@@ -135,7 +145,7 @@
                                 $list += `
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                             <div class="product-item bg-light mb-4" id="myForm">
-                                <div class="product-img position-relative overflow-hidden" style=" height: 200px">
+                                <div class="product-img position-relative overflow-hidden" style=" height: 20rem">
                                     <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i
@@ -172,7 +182,7 @@
                                 $list += `
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                             <div class="product-item bg-light mb-4" id="myForm">
-                                <div class="product-img position-relative overflow-hidden" style=" height: 200px">
+                                <div class="product-img position-relative overflow-hidden" style=" height: 20rem">
                                     <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i

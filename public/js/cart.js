@@ -24,18 +24,10 @@ $(document).ready(function(){
         summaryCalculation();
     })
 
-    //remove button click
-    $('.btnRemove').click(function(){
-        $parentNode = $(this).parents('tr');
-        $parentNode.remove();
-
-        summaryCalculation();
-    })
-
     // calculate final price
     function summaryCalculation(){
         $totalPrice = 0;
-        $('#dataTable tr').each(function(index,row){
+        $('#dataTable tbody #theTr').each(function(index,row){
             $totalPrice += Number($(row).find('#total').text().replace('kyats',''));
         });
 

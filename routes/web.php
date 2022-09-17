@@ -71,6 +71,18 @@ Route::middleware(['auth'])->group(function () {
             Route::get('ajax/change/status',[Ordercontroller::class,'ajaxChangeStatus'])->name('admin#ajaxChangeStatus');
             Route::get('listInfo/{orderCode}',[OrderController::class,'listInfo'])->name('admin#listInfo');
         });
+
+        //user list
+        Route::prefix('user')->group(function () {
+            Route::get('list',[UserController::class,'userList'])->name('admin#userList');
+            Route::get('ajax/change/role',[UserController::class,'ajaxChangeRole'])->name('admin#ajaxRoleChange');
+            Route::get('delete/{id}',[UserController::class,'delete'])->name('admin#userDelete');
+        });
+
+        //user contact
+        Route::prefix('contact')->group(function () {
+            Route::get('list',[UserController::class,'contactList'])->name('admin#userContactList');
+        });
     });
 
     //user
@@ -79,6 +91,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/homePage',[UserController::class,'home'])->name('user#home');
         Route::get('/filter/{id}',[UserController::class,'filter'])->name('user#filter');
         Route::get('/history',[UserController::class,'history'])->name('user#history');
+        Route::get('contactPage',[UserController::class,'contactPage'])->name('user#contactPage');
+        Route::post('contact',[UserController::class,'contact'])->name('user#contact');
 
         Route::prefix('password')->group(function () {
             Route::get('change',[UserController::class,'changePasswordPage'])->name('user#changePasswordPage');
@@ -94,8 +108,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('pizza/list',[AjaxController::class,'pizzaList'])->name('ajax#pizzaList');
             Route::get('addToCart',[AjaxController::class,'addToCart'])->name('ajax#addToCart');
             Route::get('order',[AjaxController::class,'order'])->name('ajax#order');
-            route::get('clear/cart',[AjaxController::class,'clearCart'])->name('ajax#clearCart');
-            route::get('clear/current_product',[AjaxController::class,'clearCurrentProduct'])->name('ajax#clearCurrentProduct');
+            Route::get('clear/cart',[AjaxController::class,'clearCart'])->name('ajax#clearCart');
+            Route::get('clear/current_product',[AjaxController::class,'clearCurrentProduct'])->name('ajax#clearCurrentProduct');
+            Route::get('increase/viewCount',[AjaxController::class,'increaseViewCount'])->name('ajax#increaseViewCount');
         });
 
         Route::prefix('pizza')->group(function () {

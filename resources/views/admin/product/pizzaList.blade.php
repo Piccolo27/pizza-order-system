@@ -19,7 +19,7 @@
                         <div class="table-data__tool-right">
                             <a href="{{ Route('product#createPage') }}">
                                 <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                    <i class="zmdi zmdi-plus"></i>add pizza
+                                    <i class="zmdi zmdi-plus"></i>add product
                                 </button>
                             </a>
                             <button class="au-btn au-btn-icon au-btn--green au-btn--small">
@@ -76,7 +76,7 @@
                                 <tbody>
                                     @foreach ($pizzas as $pizza)
                                         <tr class="tr-shadow">
-                                            <td class=" col-2"><img src="{{ asset('storage/'.$pizza->image) }}" class=" img-thumbnail shadow-sm" style="height: 150px; width:200px"></td>
+                                            <td class=" col-2"><img src="{{ asset('storage/'.$pizza->image) }}" class=" img-thumbnail shadow-sm"></td>
                                             <td>{{ $pizza->name }}</td>
                                             <td>{{ $pizza->price }}</td>
                                             <td>{{ $pizza->category_name }}</td>
@@ -109,7 +109,7 @@
                             </div>
                         </div>
                     @else
-                        <h3 class=" text-secondary text-center mt-5">There is no Pizza Here!</h3>
+                        <h3 class=" text-secondary text-center mt-5">There is no {{ request('key') }} here!</h3>
                     @endif
 
                 <!-- END DATA TABLE -->

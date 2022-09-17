@@ -33,10 +33,11 @@
     <!-- Navbar Start -->
     <div class="container-fluid bg-dark mb-30">
         <div class="row px-xl-5">
-            <div class="col-lg-3 d-none d-lg-block">
-                {{-- <a href="" class="text-decoration-none">
-                    <span class="h1 text-uppercase text-primary bg-dark px-2">My Shop</span>
-                </a> --}}
+            <div class="col-lg-3 d-none d-lg-block mt-2">
+                <a href="" class="text-decoration-none">
+                    <span class="h1 text-uppercase text-primary bg-dark px-2">Pizza</span>
+                    <span class="h1 text-uppercase text-dark bg-primary px-2 ml-n1">Shop</span>
+                </a>
             </div>
             <div class="col-lg-9">
                 <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
@@ -50,8 +51,7 @@
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
                             <a href="{{ route('user#home') }}" class="nav-item nav-link">Home</a>
-                            {{-- <a href="cart.html" class="nav-item nav-link">My Cart</a>
-                            <a href="contact.html" class="nav-item nav-link">Contact</a> --}}
+                            <a href="{{ route('user#contactPage') }}" class="nav-item nav-link">Contact</a>
                         </div>
                         <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
                             {{-- <a href="" class="btn px-0">
@@ -71,10 +71,10 @@
                                   <li><a class="dropdown-item my-2" href="{{ route('user#accountChangePage') }}"><i class="fa-solid fa-user me-2"></i>Account</a></li>
                                   <li><a class="dropdown-item my-2" href="{{ route('user#changePasswordPage') }}"><i class="fa-solid fa-key me-2"></i>Change Password</a></li>
                                   <li>
-                                    <span class=" dropdown-item">
+                                    <span class="">
                                         <form action="{{ route('logout') }}" method="post">
                                             @csrf
-                                            <button class="btn bg-dark text-white" type="submit"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</button>
+                                            <button class="btn bg-dark text-white ms-3" type="submit"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</button>
                                         </form>
                                     </span>
                                   </li>

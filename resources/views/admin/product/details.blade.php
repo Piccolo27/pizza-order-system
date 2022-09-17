@@ -30,8 +30,8 @@
                             </div>
                             <hr>
                             <div class="row">
-                                <div class="col-3 offset-1 d-flex">
-                                    <img src="{{ asset('storage/'.$pizza->image) }}" class="img-thumbnail shadow-sm align-self-center" />
+                                <div class="col-3 offset-1">
+                                    <img src="{{ asset('storage/'.$pizza->image) }}" class="img-thumbnail shadow-sm mt-5" />
                                 </div>
                                 <div class="col-7 offset-1">
                                     <span class="my-3 btn btn-white text-dark"> <i class="fa-solid fs-4 fa-dollar-sign me-2"></i> {{ $pizza->price }} </span>

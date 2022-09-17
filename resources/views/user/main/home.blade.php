@@ -30,9 +30,6 @@
                     </form>
                 </div>
                 <!-- Price End -->
-                <div class="">
-                    <button class="btn btn btn-warning w-100">Order</button>
-                </div>
 
             </div>
             <!-- Shop Sidebar End -->
@@ -59,7 +56,7 @@
                                         <i class="fa-solid fa-clock-rotate-left"></i>
                                         <span
                                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                            {{ count($cart) }}
+                                            {{ count($orders) }}
                                         </span>
                                     </button>
                                 </a>
@@ -72,15 +69,6 @@
                                         <option value="desc">Descending</option>
                                     </select>
                                 </div>
-                                <div class="btn-group ml-2">
-                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle"
-                                        data-toggle="dropdown">Showing</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">10</a>
-                                        <a class="dropdown-item" href="#">20</a>
-                                        <a class="dropdown-item" href="#">30</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -89,9 +77,11 @@
                             @foreach ($pizzas as $pizza)
                                 <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                                     <div class="product-item bg-light mb-4" id="myForm">
-                                        <div class="product-img position-relative overflow-hidden" style=" height: 20rem">
-                                            <img class="img-fluid w-100" src="{{ asset('storage/' . $pizza->image) }}"
-                                                alt="">
+                                        <div class="product-img position-relative overflow-hidden">
+                                            <div class="" style="height: 220px">
+                                                <img class="img-fluid w-100 bg-cover"
+                                                    src="{{ asset('storage/' . $pizza->image) }}">
+                                            </div>
                                             <div class="product-action">
                                                 <a class="btn btn-outline-dark btn-square" href=""><i
                                                         class="fa fa-shopping-cart"></i></a>
@@ -111,7 +101,7 @@
                                 </div>
                             @endforeach
                         @else
-                            <p class=" text-center fs-4 col-6 offset-3 py-5 ">There is no pizza</p>
+                            <p class=" text-center fs-4 col-6 offset-3 py-5 ">There is no data</p>
                         @endif
                     </span>
                 </div>
@@ -145,8 +135,10 @@
                                 $list += `
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                             <div class="product-item bg-light mb-4" id="myForm">
-                                <div class="product-img position-relative overflow-hidden" style=" height: 20rem">
-                                    <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
+                                <div class="product-img position-relative overflow-hidden">
+                                    <div class="" style="height: 200px">
+                                        <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
+                                    </div>
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i
                                                 class="fa fa-shopping-cart"></i></a>
@@ -182,8 +174,10 @@
                                 $list += `
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
                             <div class="product-item bg-light mb-4" id="myForm">
-                                <div class="product-img position-relative overflow-hidden" style=" height: 20rem">
-                                    <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
+                                <div class="product-img position-relative overflow-hidden">
+                                    <div class="" style="height: 200px">
+                                        <img class="img-fluid w-100" src="{{ asset('storage/${response[$i].image}') }}" alt="">
+                                    </div>
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href=""><i
                                                 class="fa fa-shopping-cart"></i></a>

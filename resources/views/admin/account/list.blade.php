@@ -9,24 +9,6 @@
             <div class="container-fluid">
                 <div class="col-md-12">
                     <!-- DATA TABLE -->
-                    <div class="table-data__tool">
-                        <div class="table-data__tool-left">
-                            <div class="overview-wrap">
-                                <h2 class="title-1">Admin List</h2>
-
-                            </div>
-                        </div>
-                        <div class="table-data__tool-right">
-                            <a href="{{ Route('category#createPage') }}">
-                                <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                    <i class="zmdi zmdi-plus"></i>add category
-                                </button>
-                            </a>
-                            <button class="au-btn au-btn-icon au-btn--green au-btn--small">
-                                CSV download
-                            </button>
-                        </div>
-                    </div>
 
                     @if (session('deleteSuccess'))
                         <div class="col-5 offset-7">
@@ -157,8 +139,7 @@
                 data: $data,
                 dataType: 'json',
             })
-
-            console.log('Role Changed Successfully');
+            location.reload();
         })
     </script>
 @endsection

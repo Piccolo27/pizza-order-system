@@ -68,6 +68,16 @@
                                 <i class="fa-solid fa-list-check"></i>  Order List
                             </a>
                         </li>
+                        <li>
+                            <a href="{{ Route('admin#userList') }}">
+                                <i class="fa-solid fa-users"></i>  User List
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ Route('admin#userContactList') }}">
+                                <i class="fa-solid fa-clipboard-list"></i>  User Contact
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </div>

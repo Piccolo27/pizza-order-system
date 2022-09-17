@@ -79,9 +79,6 @@
                                         <td>{{ $category->created_at->format('j-F-Y') }}</td>
                                         <td>
                                             <div class="table-data-feature">
-                                                {{-- <button class="item" data-toggle="tooltip" data-placement="top" title="Send">
-                                                    <i class="zmdi zmdi-mail-send"></i>
-                                                </button> --}}
                                                 <a href="{{ Route('category#edit',$category->id) }}">
                                                     <button class="item me-2" data-toggle="tooltip" data-placement="top" title="Edit">
                                                         <i class="zmdi zmdi-edit"></i>

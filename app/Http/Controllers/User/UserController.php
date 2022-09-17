@@ -6,8 +6,10 @@ use Carbon\Carbon;
 use App\Models\Cart;
 use App\Models\User;
 use App\Models\Order;
+use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\OrderList;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +24,22 @@ class UserController extends Controller
         $pizzas = Product::orderBy('created_at','desc')->get();
         $categories = Category::get();
         $cart = Cart::where('user_id',Auth::user()->id)->get();
-        return view('user.main.home',compact('pizzas','categories','cart'));
+        $orders = Order::where('user_id',Auth::user()->id)->get();
+        return view('user.main.home',compact('pizzas','categories','cart','orders'));
+    }
+
+    //contact page
+    public function contactPage(){
+        return view('user.contact.contact');
+    }
+
+    //contact upload
+    public function contact(Request $request){
+        $this->contactFormValidationCheck($request);
+        $data = $this->requestContactInfo($request);
+
+        Contact::create($data);
+        return redirect()->route('user#home');
     }
 
     //change password page
@@ -82,8 +99,9 @@ class UserController extends Controller
     public function filter($categoryId){
         $pizzas = Product::where('category_id',$categoryId)->orderBy('created_at','desc')->get();
         $categories = Category::get();
+        $orders = Order::where('user_id',Auth::user()->id)->get();
         $cart = Cart::where('user_id',Auth::user()->id)->get();
-        return view('user.main.home',compact('pizzas','categories','cart'));
+        return view('user.main.home',compact('pizzas','categories','cart','orders'));
     }
 
     //pizza details
@@ -108,12 +126,39 @@ class UserController extends Controller
         return view('user.main.cart',compact('cartList','totalPrice'));
     }
 
-    //hsitory page
+    //history page
     public function history(){
         $orders = Order::where('user_id',Auth::user()->id)
                         ->orderBy('created_at')
                         ->paginate(6);
         return view('user.main.history',compact('orders'));
+    }
+
+    //direct user list page
+    public function userList(){
+        $users = User::where('role','user')->paginate(3);
+        return view('admin.user.list',compact('users'));
+    }
+
+    //ajax role change
+    public function ajaxChangeRole(Request $request){
+        User::where('id',$request->userId)->update([
+            'role' => $request->role ,
+        ]);
+    }
+
+    //delete user
+    public function delete($id){
+        User::where('id',$id)->delete();
+        Order::where('user_id',$id)->delete();
+        OrderList::where('user_id',$id)->delete();
+        return redirect()->route('admin#userList')->with(['deleteSuccess' => 'User Deleted Successfully...']);
+    }
+
+    //user contact list
+    public function contactList(){
+        $contact = Contact::paginate(6);
+        return view('admin.contact.list',compact('contact'));
     }
 
     //request user data
@@ -147,5 +192,25 @@ class UserController extends Controller
             'newPassword' => 'required|min:6',
             'confirmPassword' => 'required|min:6|same:newPassword',
         ])->validate();
+    }
+
+    //contact validation check
+    private function contactFormValidationCheck($request){
+        Validator::make($request->all(),[
+            'name' => 'required' ,
+            'email' => 'required' ,
+            'subject' => 'required' ,
+            'message' => 'required' ,
+        ])->validate();
+    }
+
+    //request contact info
+    private function requestContactInfo($request){
+        return [
+            'name' => $request->name ,
+            'email' => $request->email ,
+            'subject' => $request->subject ,
+            'message' => $request->message ,
+        ];
     }
 }

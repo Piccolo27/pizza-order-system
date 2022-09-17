@@ -12,7 +12,7 @@
                             </div>
                             <hr>
                             @if (session('updateSuccess'))
-                                <div class="col-3 offset-8">
+                                <div class="col-4 offset-8">
                                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                                         <i class="fa-solid fa-user-check me-2"></i> {{ session('updateSuccess') }}
                                         <button type="button" class="btn-close" data-bs-dismiss="alert"

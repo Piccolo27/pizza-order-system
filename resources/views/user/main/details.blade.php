@@ -23,14 +23,7 @@
                     <input type="hidden" value="{{ Auth::user()->id }}" id="userId">
                     <input type="hidden" value="{{ $pizzas->id }}" id="pizzaId">
                     <div class="d-flex mb-3">
-                        {{-- <div class="text-primary mr-2">
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star"></small>
-                            <small class="fas fa-star-half-alt"></small>
-                            <small class="far fa-star"></small>
-                        </div> --}}
-                        <small class="pt-1">{{ $pizzas->view_count }}<i class="fa-solid fa-eye ms-2"></i></small>
+                        <small class="pt-1">{{ $pizzas->view_count + 1 }}<i class="fa-solid fa-eye ms-2"></i></small>
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">{{ $pizzas->price }} kyats</h3>
                     <p class="mb-4">{{ $pizzas->description }}</p>
@@ -123,6 +116,16 @@
 @section('scriptSource')
     <script>
         $(document).ready(function() {
+
+            //increase view count
+            $.ajax({
+                type: 'get',
+                url: 'http://localhost:8000/user/ajax/increase/viewCount',
+                data: { 'productId' : $('#pizzaId').val() },
+                dataType: 'json',
+            })
+
+            //click to add cart
             $('#addCartBtn').click(function() {
                 $source = {
                     'userId': $('#userId').val(),
@@ -131,12 +134,12 @@
                 };
 
                 $.ajax({
-                    type : 'get' ,
-                    url : 'http://localhost:8000/user/ajax/addToCart' ,
-                    data : $source ,
-                    dataType : 'json' ,
-                    success : function(response){
-                        if(response.status == 'success'){
+                    type: 'get',
+                    url: 'http://localhost:8000/user/ajax/addToCart',
+                    data: $source,
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status == 'success') {
                             window.location.href = 'http://localhost:8000/user/homePage';
                         }
                     }

@@ -75,11 +75,13 @@ class AdminController extends Controller
     //admin list
     public function list(){
         $admins = user::when(request('key'),function($query){
-                        $query->orWhere('name','like','%'.request('key').'%')
+                        $query->where(function($q){
+                            $q->orWhere('name','like','%'.request('key').'%')
                               ->orWhere('email','like','%'.request('key').'%')
                               ->orWhere('gender','like','%'.request('key').'%')
                               ->orWhere('phone','like','%'.request('key').'%')
                               ->orWhere('address','like','%'.request('key').'%');
+                        });
                     })
                     ->where('role','admin')
                     ->paginate(3);

@@ -176,8 +176,6 @@
                     'orderId': $orderId,
                 };
 
-                console.log($data);
-
                 $.ajax({
                     type: 'get',
                     url: 'http://localhost:8000/order/ajax/change/status',

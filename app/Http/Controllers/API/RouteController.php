@@ -110,7 +110,7 @@ class RouteController extends Controller
     private function getCategoryData($request){
         return [
             'name' => $request->category_name ,
-            'updated_at' =>carbon::now()
+            'updated_at' =>Carbon::now()
         ];
     }
 }
